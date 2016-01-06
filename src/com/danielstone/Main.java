@@ -11,6 +11,7 @@ public class Main extends Application{
 
     Stage window;
     Scene scene;
+    boolean result;
 
     public static void main(String[] args) {
         launch(args);
@@ -25,7 +26,11 @@ public class Main extends Application{
 
         //Button 1
         Button button = new Button("Click Me");
-        button.setOnAction(event -> AlertBox.display("Alert", "Example Alert"));
+        button.setOnAction(event -> {
+            result = ConfirmBox.display("Alert", "Are you sure?");
+            System.out.println(result);
+
+        });
 
         //Layout 2 -
         StackPane layout = new StackPane();
