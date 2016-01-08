@@ -3,7 +3,10 @@ package com.danielstone;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application{
@@ -20,19 +23,25 @@ public class Main extends Application{
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
 
-        window.setOnCloseRequest(event1 -> {
-            event1.consume();
-            closeProgram();
-        });
+        HBox topMenu = new HBox();
+        Button buttonA = new Button("File");
+        Button buttonB = new Button("Edit");
+        Button buttonC = new Button("View");
+        topMenu.getChildren().addAll(buttonA, buttonB, buttonC);
 
-        //Button 1
-        Button button = new Button("Close Program");
-        button.setOnAction(event -> closeProgram());
+        VBox leftMenu = new VBox();
+        Button buttonD = new Button("D");
+        Button buttonE = new Button("E");
+        Button buttonF = new Button("F");
+        leftMenu.getChildren().addAll(buttonD, buttonE, buttonF);
+
+        BorderPane borderPane = new BorderPane();
+        borderPane.setTop(topMenu);
+        borderPane.setLeft(leftMenu);
 
         //Layout
         StackPane layout = new StackPane();
-        layout.getChildren().add(button);
-        scene = new Scene(layout, 600, 300);
+        scene = new Scene(borderPane, 600, 300);
 
         window.setScene(scene);
         window.setTitle("Title");
@@ -40,12 +49,5 @@ public class Main extends Application{
 
     }
 
-    private void closeProgram() {
-        Boolean answer = ConfirmBox.display("Alert", "Are you sure you want to exit?");
-
-        if (answer) {
-            window.close();
-        }
-    }
 
 }
