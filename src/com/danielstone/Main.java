@@ -3,7 +3,6 @@ package com.danielstone;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -21,18 +20,16 @@ public class Main extends Application{
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
 
-        Label label1 = new Label("Welcome to the first scene!");
-
-
-        //Button 1
-        Button button = new Button("Click Me");
-        button.setOnAction(event -> {
-            result = ConfirmBox.display("Alert", "Are you sure?");
-            System.out.println(result);
-
+        window.setOnCloseRequest(event1 -> {
+            event1.consume();
+            closeProgram();
         });
 
-        //Layout 2 -
+        //Button 1
+        Button button = new Button("Close Program");
+        button.setOnAction(event -> closeProgram());
+
+        //Layout
         StackPane layout = new StackPane();
         layout.getChildren().add(button);
         scene = new Scene(layout, 600, 300);
@@ -41,6 +38,14 @@ public class Main extends Application{
         window.setTitle("Title");
         window.show();
 
+    }
+
+    private void closeProgram() {
+        Boolean answer = ConfirmBox.display("Alert", "Are you sure you want to exit?");
+
+        if (answer) {
+            window.close();
+        }
     }
 
 }
