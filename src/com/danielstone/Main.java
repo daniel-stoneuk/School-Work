@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class Main extends Application{
+public class Main extends Application {
 
     Stage window;
     Scene scene;
@@ -29,13 +29,15 @@ public class Main extends Application{
 
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
         choiceBox.getItems().setAll("apples", "oranges", "bananas");
-
         choiceBox.setValue(choiceBox.getItems().get(0));
 
-        layout.getChildren().add(choiceBox);
-        Button button = new Button("Click me");
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("You chose " + newValue + " from " + oldValue);
+        });
 
-        button.setOnAction(event -> {getChoice(choiceBox);});
+        layout.getChildren().add(choiceBox);
+
+        Button button = new Button("Click me");
 
         layout.getChildren().addAll(button);
         scene = new Scene(layout, 300, 200);
@@ -45,11 +47,4 @@ public class Main extends Application{
         window.show();
     }
 
-    private void getChoice(ChoiceBox<String> choiceBox) {
-        String food = choiceBox.getValue();
-
-        int chosen = choiceBox.getItems().indexOf(food);
-
-        System.out.println(food + "\n" + chosen);
-    }
 }
