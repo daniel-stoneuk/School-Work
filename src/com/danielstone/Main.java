@@ -13,7 +13,6 @@ public class Main extends Application{
 
     Stage window;
     Scene scene;
-    boolean result;
 
     public static void main(String[] args) {
         launch(args);
@@ -28,35 +27,37 @@ public class Main extends Application{
         gridPane.setVgap(10);
         gridPane.setHgap(10);
 
-        //name label
-        Label nameLabel = new Label("Username:");
-        GridPane.setConstraints(nameLabel, 0, 0);
-
         //name input
         TextField nameInput = new TextField();
-        GridPane.setConstraints(nameInput, 1, 0);
+        GridPane.setConstraints(nameInput, 0, 0);
 
         //name label
-        Label passLabel = new Label("Pasword:");
-        GridPane.setConstraints(passLabel, 0, 1);
+        Button button = new Button("Click Me");
+        button.setOnAction(event -> isInteger(nameInput, nameInput.getText()));
+        GridPane.setConstraints(button, 0, 1);
 
-        //name input
-        TextField passInput = new TextField();
-        passInput.setPromptText("password");
-        GridPane.setConstraints(passInput, 1, 1);
 
-        Button loginButton = new Button("Log In");
-        GridPane.setConstraints(loginButton, 1, 2);
+        gridPane.getChildren().addAll(button, nameInput);
 
-        gridPane.getChildren().addAll(nameLabel, nameInput, passLabel, passInput, loginButton);
-
-        Scene scene = new Scene(gridPane, 300, 200);
+        scene = new Scene(gridPane, 300, 200);
 
         window.setScene(scene);
         window.setTitle("GridPane");
         window.show();
-
     }
 
+    public boolean isInteger(TextField textField, String message) {
+
+        try {
+            int age = Integer.parseInt(message);
+            System.out.println("User is:" + age);
+            return true;
+        } catch(NumberFormatException e) {
+            System.out.println("Error: " + message + "is not a number");
+            return false;
+        }
+
+
+    }
 
 }
