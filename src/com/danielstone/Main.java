@@ -1,20 +1,19 @@
 package com.danielstone;
 
 import javafx.application.Application;
-import javafx.collections.ArrayChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 public class Main extends Application {
 
     Stage window;
     Scene scene;
+    Button button;
+    ComboBox<String> comboBox;
 
     public static void main(String[] args) {
         launch(args);
@@ -27,24 +26,30 @@ public class Main extends Application {
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20));
 
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().setAll("apples", "oranges", "bananas");
-        choiceBox.setValue(choiceBox.getItems().get(0));
+        button = new Button("Submit");
+        button.setOnAction(e -> printMovie());
 
-        choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("You chose " + newValue + " from " + oldValue);
-        });
+        comboBox = new ComboBox<>();
+        comboBox.getItems().addAll(
+                "Pasta",
+                "Pizza",
+                "Steak"
+        );
+        //comboBox.setPromptText("What is your favourite food?");
+        comboBox.setEditable(true);
 
-        layout.getChildren().add(choiceBox);
+        comboBox.setOnAction(e -> System.out.println("User selected: " + comboBox.getValue()));
 
-        Button button = new Button("Click me");
+        layout.getChildren().addAll(comboBox, button);
 
-        layout.getChildren().addAll(button);
         scene = new Scene(layout, 300, 200);
-
         window.setScene(scene);
-        window.setTitle("VBox");
+        window.setTitle("ComboBox");
         window.show();
+    }
+
+    private void printMovie() {
+        System.out.println(comboBox.getValue());
     }
 
 }
