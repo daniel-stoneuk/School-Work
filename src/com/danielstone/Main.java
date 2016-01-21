@@ -1,10 +1,10 @@
 package com.danielstone;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -13,7 +13,7 @@ public class Main extends Application {
     Stage window;
     Scene scene;
     Button button;
-    ComboBox<String> comboBox;
+    ListView<String> listView;
 
     public static void main(String[] args) {
         launch(args);
@@ -26,30 +26,34 @@ public class Main extends Application {
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20));
 
+        listView = new ListView<>();
+        listView.getItems().addAll("Film One", "Film Two", "Film Three", "Film Four");
+        listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
         button = new Button("Submit");
-        button.setOnAction(e -> printMovie());
+        button.setOnAction(e -> buttonClicked());
 
-        comboBox = new ComboBox<>();
-        comboBox.getItems().addAll(
-                "Pasta",
-                "Pizza",
-                "Steak"
-        );
-        //comboBox.setPromptText("What is your favourite food?");
-        comboBox.setEditable(true);
-
-        comboBox.setOnAction(e -> System.out.println("User selected: " + comboBox.getValue()));
-
-        layout.getChildren().addAll(comboBox, button);
+        layout.getChildren().addAll(button, listView);
 
         scene = new Scene(layout, 300, 200);
         window.setScene(scene);
-        window.setTitle("ComboBox");
+        window.setTitle("ListView");
         window.show();
     }
 
-    private void printMovie() {
-        System.out.println(comboBox.getValue());
+    private void buttonClicked() {
+        String message = "";
+        ObservableList<String> movies;
+        movies = listView.getSelectionModel().getSelectedItems();
+
+
+        for (String m: movies) {
+            message += m + "\n";
+        }
+
+        System.out.println(message);
+
+
     }
 
 }
